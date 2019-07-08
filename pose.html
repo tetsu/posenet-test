@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <!-- Load TensorFlow.js -->
+    <script src="tfjs.js"></script>
+    <!-- Load Posenet -->
+    <script src="posenet.js"></script>
+  </head>
+
+  <body>
+    <img
+      id="test"
+      src="SDS_tedejesucya-surudansei_TP_V.jpg"
+      style="position:absolute;"
+    />
+  </body>
+  <script>
+    var imageScaleFactor = 1;
+    var outputStride = 16;
+    var flipHorizontal = false;
+
+    // var img = document.getElementById('test');
+    let img = new Image('different_origin_but_CORS_enabled.jpg');
+    img.crossOrigin = 'Anonymous';
+    img.width = 1600;
+    img.height = 1600;
+
+    posenet
+      .load()
+      .then(function(net) {
+        return net.estimateSinglePose(
+          img,
+          imageScaleFactor,
+          flipHorizontal,
+          outputStride
+        );
+      })
+      .then(function(pose) {
+        console.log(pose);
+      });
+  </script>
+</html>
